@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: performance-java-server
+spec:
+  selector:
+    matchLabels:
+      app: performance-java-server
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: performance-java-server
+    spec:
+      containers:
+        - name: performance-java-server
+          image: performance/server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080 
