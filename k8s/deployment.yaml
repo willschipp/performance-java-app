@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: performance-java-server
-          image: performance/server:latest
+          image: ghcr.io/willschipp/performance-java-app:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080 
