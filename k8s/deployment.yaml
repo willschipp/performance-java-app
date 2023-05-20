@@ -12,6 +12,8 @@ spec:
       labels:
         app: performance-java-server
     spec:
+      imagePullSecret:
+        - name: github-registry
       containers:
         - name: performance-java-server
           image: ghcr.io/willschipp/performance-java-app:latest
