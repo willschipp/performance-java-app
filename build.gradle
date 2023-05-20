@@ -2,11 +2,18 @@ plugins {
 	id 'org.springframework.boot' version '2.7.10'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	// gattling
+	id 'io.gatling.gradle' version '3.9.5'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+gatling {
+  logLevel = 'WARN' // logback root level
+  logHttp = 'ALL' // set to 'ALL' for all HTTP traffic in TRACE, 'FAILURES' for failed HTTP traffic in DEBUG
+}
 
 repositories {
 	mavenCentral()
@@ -34,4 +41,10 @@ dependencies {
 	// testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'com.github.tomakehurst:wiremock-jre8-standalone:2.33.2'
+
+
+	// gattling
+	implementation 'io.gatling:gatling-core-java:3.9.5'
+	implementation 'io.gatling:gatling-http-java:3.9.5'
 }
+
