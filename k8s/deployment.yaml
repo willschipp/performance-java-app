@@ -26,6 +26,7 @@ spec:
               memory: 512Mi
           ports:
             - containerPort: 8080 
+            - containerPort: 8081
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
