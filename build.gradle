@@ -31,6 +31,9 @@ dependencies {
 
     implementation 'com.h2database:h2:2.0.206'
 
+	// metrics
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
     // lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

@@ -18,5 +18,23 @@ spec:
         - name: performance-java-server
           image: ghcr.io/willschipp/performance-java-app:latest
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 500m
+            limits:
+              memory: 512Mi
           ports:
             - containerPort: 8080 
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8081
+              initialDelaySeconds: 3
+              periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8081
+              initialDelaySeconds: 3
+              periodSeconds: 3              
