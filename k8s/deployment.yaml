@@ -25,19 +25,18 @@ spec:
             limits:
               memory: 512Mi
           ports:
-            - containerPort: 8080 
-            - containerPort: 8081
+            - containerPort: 8080
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8081
-              initialDelaySeconds: 3
-              periodSeconds: 3
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8081
-              initialDelaySeconds: 3
-              periodSeconds: 3
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
       nodeSelector:
         performance: "true"
