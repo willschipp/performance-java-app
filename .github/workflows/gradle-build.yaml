@@ -1,0 +1,55 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - 'develop'
+
+jobs:
+  build:
+    name: Gradle Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+      - name: Build with gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        with:
+          arguments: build bootJar
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: build/libs
+  
+  docker:
+    name: Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download app
+        uses: actions/download-artifact@v3
+        with:
+          name: app
+      - name: Login to GHCR.io
+        users: docker/login-action@v2
+        with:
+          username: willschipp
+          password: $${{ secrets.GHCR_TOKEN }}
+      - name: Setup Docker Buildx
+        users: docker/setup-buildx-actions@v2
+      - name: Build and push
+        users: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          build-args: JAVA_FILE=app
+          tags: willschipp/performance-java-server:latest
